@@ -1,0 +1,30 @@
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 1em;
+}
+
+input { 
+  opacity: 0.8;
+  border-radius: 5px;
+  margin: .5em 0;
+}
+
+button {
+  flex: 1 1 auto;
+  margin: 0 .25em;
+  min-width: 4.5em;
+}
+button:first-child {
+  margin-left: 0;
+}
+button:last-child {
+  margin-right: 0;
+}
+
+.button-holder {
+  display: flex;
+  justify-content: space-between;
+  margin-top: .25em;
+}

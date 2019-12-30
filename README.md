@@ -1,2 +1,2 @@
 # crunchy-theme
-Theme changer for Crunchyroll
+Customizable theme for Crunchyroll
