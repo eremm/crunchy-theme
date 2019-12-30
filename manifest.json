@@ -23,6 +23,7 @@
       ],
       "js": [
         "chrome-extension-async.js",
+        "theme.js",
         "content.js"
       ]
     }

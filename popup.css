@@ -5,6 +5,24 @@ body {
   font-size: 1em;
 }
 
+.holder {
+  display: flex;
+  justify-content: space-between;
+}
+
+.color-well-holder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 .5em;
+}
+.color-well-holder:first-child {
+  margin-left: 0;
+}
+.color-well-holder:last-child {
+  margin-right: 0;
+}
+
 input { 
   opacity: 0.8;
   border-radius: 5px;

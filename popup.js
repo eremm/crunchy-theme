@@ -1,51 +1,58 @@
-const colorWell = document.getElementById('color-well');
+const colorWells = [...document.getElementsByTagName('input')];
 const [saveButton, cancelButton] = document.getElementsByTagName('button');
-document.style
+
 const lighter = (color) => pSBC(0.5, color);
-let currentColor;
-let storedColor;
+
+let currentTheme;
+let storedTheme;
 
 (async () => {
-  currentColor = (await getCurrentCrunchyrollTheme())[0];
-  alert(currentTheme);
-  await chrome.storage.sync.get('color', ({ color }) => {
-    storedColor = color;
+  currentTheme = await getCurrentCrunchyrollTheme();
+  await chrome.storage.sync.get('colors', ({ colors }) => {
+    storedTheme = colors;
   });
 
-  colorWell.value = currentColor;
-  colorWell.style.backgroundColor = lighter(currentColor);
-  saveButton.style.backgroundColor = lighter(currentColor);
-  saveButton.style.borderColor = currentColor;
+  colorWells.forEach((well, idx) => {
+    well.value = currentTheme[idx];
+    well.style.backgroundColor = lighter(currentTheme[idx]);
+  });
 
-  cancelButton.style.backgroundColor = lighter(storedColor);
-  cancelButton.style.borderColor = storedColor;
+  saveButton.style.backgroundColor = lighter(currentTheme[0]);
+  saveButton.style.borderColor = currentTheme[0];
+
+  cancelButton.style.backgroundColor = lighter(storedTheme[0]);
+  cancelButton.style.borderColor = storedTheme[0];
 
   const handleEvent = (event) => {
     const color = event.target.value;
-    if (currentColor != color) {
-      currentColor = color;
-      colorWell.style.backgroundColor = lighter(currentColor);
-      saveButton.style.backgroundColor = lighter(currentColor);
-      saveButton.style.borderColor = currentColor;
-      changeCrunchyrollBackground(currentColor);
+    const idx = event.target.id.slice(-1);
+    if (currentTheme[idx] != color) {
+      currentTheme[idx] = color;
+      colorWells[idx].style.backgroundColor = lighter(color);
+      if (idx == 0) {
+        saveButton.style.backgroundColor = lighter(color);
+        saveButton.style.borderColor = color;
+      }
+      changeCrunchyrollTheme(currentTheme);
     }
   };
 
-  colorWell.oninput = (event) => handleEvent(event);
-  colorWell.onchange = (event) => handleEvent(event);
+  colorWells.forEach((well) => {
+    well.oninput = (event) => handleEvent(event);
+    well.onchange = (event) => handleEvent(event);
+  });
 
   saveButton.onclick = () => {
-    if (storedColor != currentColor) {
-      // changeCrunchyrollBackground(currentColor);
-      chrome.storage.sync.set({ color: currentColor })
-      storedColor = currentColor;
+    if (JSON.stringify(storedTheme) !== JSON.stringify(currentTheme)) {
+      chrome.storage.sync.set({ colors: currentTheme })
+      storedTheme = currentTheme;
     }
     window.close();
   };
 
   cancelButton.onclick = () => {
-    if (currentColor != storedColor) {
-      changeCrunchyrollBackground(storedColor);
+    if (JSON.stringify(currentTheme) !== JSON.stringify(storedTheme)) {
+      changeCrunchyrollTheme(storedTheme);
     }
     window.close();
   };
