@@ -31,4 +31,3 @@ const popupChangeTheme = async (theme) => {
   const tab = (await chrome.tabs.query({ active: true, currentWindow: true }))[0];
   await chrome.tabs.sendMessage(tab.id, { type: 'CHANGE_THEME', theme });
 };
-
