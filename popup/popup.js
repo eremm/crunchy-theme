@@ -33,7 +33,7 @@ let storedTheme;
         saveButton.style.backgroundColor = lighter(color);
         saveButton.style.borderColor = color;
       }
-      changeCrunchyrollTheme(currentTheme);
+      popupChangeTheme(currentTheme);
     }
   };
 
@@ -52,7 +52,7 @@ let storedTheme;
 
   cancelButton.onclick = () => {
     if (JSON.stringify(currentTheme) !== JSON.stringify(storedTheme)) {
-      changeCrunchyrollTheme(storedTheme);
+      popupChangeTheme(storedTheme);
     }
     window.close();
   };

@@ -1,3 +1,4 @@
+// This content script will be executed on page load of matching sites
 (async () => {
   let storedTheme;
 
